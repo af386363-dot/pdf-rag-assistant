@@ -22,7 +22,7 @@ embeddings=MODEL.encode(chunks)
 print(embeddings.shape)
 
 client=chromadb.Client()
-collection=client.create_collection(name="Mydocs")
+collection = client.get_or_create_collection(name="my_docs")
 collection.add(
     documents=chunks,
     embeddings=embeddings.tolist(),
@@ -32,9 +32,7 @@ print("Stored", collection.count(), "chunks in the database")
 
 query = "How do vaccines create immunity?"
 
-results = collection.query(
-    query_texts=[query],
-    n_results=2
+results = collection.query(query_texts=[query], n_results=4)
 )
 
 print(results)
