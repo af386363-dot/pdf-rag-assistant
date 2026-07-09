@@ -2,10 +2,16 @@ import chromadb
 import ollama
 from sentence_transformers import SentenceTransformer
 MODEL = SentenceTransformer('all-MiniLM-L6-v2')
-with open('sample.txt','r') as file:
-    content=file.read()
-    print(content)
-    print(f"Length of content: {len(content)}")
+from pypdf import PdfReader
+
+reader = PdfReader("sample_base_knowledge.pdf")
+
+content = ""
+for page in reader.pages:
+    content += page.extract_text()
+
+print(content)
+print(f"Length of content: {len(content)}")
 import re
 chunks = re.split(r'\.\s+', content)
 chunks = [c.strip() for c in chunks if c.strip() != ""]
@@ -24,7 +30,7 @@ collection.add(
 )
 print("Stored", collection.count(), "chunks in the database")
 
-query = "Tell me about pets"
+query = "How do vaccines create immunity?"
 
 results = collection.query(
     query_texts=[query],
