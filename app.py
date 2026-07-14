@@ -3,7 +3,10 @@ import chromadb
 import ollama
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from pypdf import PdfReader
-import re
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+from nltk.tokenize import sent_tokenize
 
 st.set_page_config(page_title="RAG App", page_icon="📄", layout="centered")
 
@@ -25,7 +28,7 @@ def load_and_chunk_pdf(uploaded_file):
     for page in reader.pages:
         content += page.extract_text()
 
-    chunks = re.split(r'\.\s+', content)
+    chunks = sent_tokenize(content)
     chunks = [c.strip() for c in chunks if c.strip() != ""]
     return chunks
 
