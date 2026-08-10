@@ -32,7 +32,9 @@ print("Stored", collection.count(), "chunks in the database")
 
 query = "How do vaccines create immunity?"
 
-results = collection.query(query_texts=[query], n_results=4)
+results = collection.query(
+    query_texts=[query],
+    n_results=2
 )
 
 print(results)
