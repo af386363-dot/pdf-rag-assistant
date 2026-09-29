@@ -179,7 +179,9 @@ def ask():
 
     hypothetical_answer = generate_hypothetical_answer(resolved_query)
 
-    semantic_results = collection.query(query_texts=[hypothetical_answer], n_results=10)
+   semantic_results = collection.query(
+       query_embeddings=MODEL.encode([hypothetical_answer]).tolist(),
+       n_results=10)
     semantic_chunks = semantic_results['documents'][0]
 
     tokenized_query = resolved_query.lower().split()

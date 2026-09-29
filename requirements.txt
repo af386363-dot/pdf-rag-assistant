@@ -1,0 +1,8 @@
+flask
+gunicorn
+chromadb
+ollama
+sentence-transformers
+pypdf
+rank-bm25
+nltk
